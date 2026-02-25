@@ -1,24 +1,31 @@
-"use client"; // 1. Dizemos que a página é interativa
+"use client";
 
-import { useState } from 'react'; // 2. Pedimos o "tabuleiro" (Hook)
+import { useState } from 'react';
 import BotaoMenu from '../../components/BotaoMenu';
 
 export default function PaginaFuncionarios() {
-  // 3. Criamos o tabuleiro. Nome atual: 'escolhido'. Função para mudar: 'setEscolhido'.
-  const [escolhido, setEscolhido] = useState("Nenhum");
+  // O nosso tabuleiro agora guarda uma lista de nomes
+  const [equipa, setEquipa] = useState(['Pedro', 'Maria', 'João']);
 
   return (
     <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
       <h1>Gestão de Equipa</h1>
-      
-      {/* Aqui mostramos o que está no "tabuleiro" neste momento */}
-      <p>Funcionário selecionado: <strong>{escolhido}</strong></p>
 
-      <div style={{ marginTop: '20px' }}>
-        {/* Quando clicamos, a mão (setEscolhido) muda o valor no tabuleiro */}
-        <button onClick={() => setEscolhido("Pedro")}>Selecionar Pedro</button>
-        <button onClick={() => setEscolhido("Maria")}>Selecionar Maria</button>
-      </div>
+      <ul>
+        {/* O .map() percorre a lista e cria um <li> para cada nome */}
+        {equipa.map((nome) => (
+          <li key={nome} style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
+            {nome}
+          </li>
+        ))}
+      </ul>
+
+      <button 
+        onClick={() => setEquipa([...equipa, 'Novo Funcionário'])}
+        style={{ marginTop: '20px', padding: '10px' }}
+      >
+        Adicionar Alguém à Equipa
+      </button>
 
       <hr style={{ margin: '30px 0' }} />
       <BotaoMenu texto="Voltar ao Início" destino="/" />
