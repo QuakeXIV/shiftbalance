@@ -1,13 +1,16 @@
+import { formatarHoras } from '../utils/calculos';
+
 // Definimos o que a "Mochila" do funcionário deve conter
 interface FuncionarioProps {
   nome: string;
   cargo: string;
+  horas: number;
 }
 
-export default function CardFuncionario({ nome, cargo }: FuncionarioProps) {
+export default function CardFuncionario({ nome, cargo, horas }: FuncionarioProps) {
   return (
     <div style={{
-      border: '1px solid #ffbc0d',
+      border: '5px solid #ffbc0d',
       padding: '15px',
       borderRadius: '10px',
       marginBottom: '10px',
@@ -20,7 +23,8 @@ export default function CardFuncionario({ nome, cargo }: FuncionarioProps) {
     }}>
       <div>
         <h3 style={{ margin: 0 }}>{nome}</h3>
-        <p style={{ margin: 0, color: '#666' }}>{cargo}</p>
+        <p style={{ margin: 0, color: '#666' }}></p>
+        <p>{cargo} • {formatarHoras(horas)}</p>
       </div>
       <span style={{ fontSize: '0.8rem', backgroundColor: '#eee', padding: '5px', borderRadius: '5px' }}>
         Ativo

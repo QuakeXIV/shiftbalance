@@ -3,9 +3,15 @@
 import { useState } from 'react';
 import BotaoMenu from '../../components/BotaoMenu';
 import CardFuncionario from '@/components/CardFuncionarios';
+import { formatarHoras } from '@/utils/calculos';  
 
 export default function PaginaFuncionarios() {
-    const [equipa, setEquipa] = useState([{ nome: 'Pedro', cargo: 'Geral' }]); // Este tabuleiro guarda a lista de funcionários, começa com um exemplo
+
+    // No topo do ficheiro, com os outros states:
+    const [horas, setHoras] = useState("");
+
+
+    const [equipa, setEquipa] = useState([{ nome: 'Pedro', cargo: 'Geral', horas: 8 }]); // Este tabuleiro guarda a lista de funcionários, começa com um exemplo
 
     // Este tabuleiro guarda o que estás a escrever agora
     const [nomeDigitado, setNomeDigitado] = useState("");
@@ -13,12 +19,20 @@ export default function PaginaFuncionarios() {
     const [cargo, setCargo] = useState("");
 
     const adicionarFuncionario = () => {
-        if (nomeDigitado !== "" && cargo !== "") {
-            // Criamos um OBJETO { nome, cargo } e metemos na lista
-            setEquipa([...equipa, { nome: nomeDigitado, cargo: cargo }]);
+        if (nomeDigitado !== "" && cargo !== "" && horas !== "") {
 
+            const novoFuncionario = {
+                nome: nomeDigitado,
+                cargo: cargo,
+                horas: Number(horas) // Convertemos para número
+            };
+
+            setEquipa([...equipa, novoFuncionario]);
+
+            // Limpamos tudo
             setNomeDigitado("");
             setCargo("");
+            setHoras("");
         }
     };
 
@@ -43,6 +57,14 @@ export default function PaginaFuncionarios() {
                 style={{ padding: '10px', fontSize: '1rem' }}
             />
 
+            <input
+                type="number"
+                placeholder="Horas de turno..."
+                value={horas}
+                onChange={(e) => setHoras(e.target.value)}
+                style={{ padding: '10px', fontSize: '1rem', marginLeft: '5px' }}
+            />
+
             <button onClick={adicionarFuncionario} style={{ padding: '10px', marginLeft: '10px' }}>
                 Adicionar à Equipa
             </button>
@@ -52,7 +74,7 @@ export default function PaginaFuncionarios() {
             {/* 2. A LISTA */}
             <ul style={{ marginTop: '30px' }}>
                 {equipa.map((funcionario, index) => (
-                    <CardFuncionario key={index} nome={funcionario.nome} cargo={funcionario.cargo} />
+                    <CardFuncionario key={index} nome={funcionario.nome} cargo={funcionario.cargo} horas={funcionario.horas} />
                 ))}
             </ul>
 
